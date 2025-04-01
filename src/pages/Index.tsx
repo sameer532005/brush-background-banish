@@ -1,11 +1,13 @@
 
 import React, { useState } from "react";
-import { Brush, Filter, Lightbulb } from "lucide-react";
+import { Brush, Filter, Lightbulb, Crop as CropIcon, Sparkles } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import FileUpload from "@/components/FileUpload";
 import Canvas from "@/components/Canvas";
 import ResultPreview from "@/components/ResultPreview";
 import ImageFilters from "@/components/ImageFilters";
+import ImageCropper from "@/components/ImageCropper";
+import NoiseRemoval from "@/components/NoiseRemoval";
 
 const Index = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
@@ -31,7 +33,7 @@ const Index = () => {
           </div>
           <h1 className="text-3xl font-bold mb-2">Image Editor</h1>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Upload an image and use our powerful tools to remove backgrounds or apply stunning filters.
+            Upload an image and use our powerful tools to remove backgrounds, apply filters, crop images, or reduce noise.
           </p>
         </header>
         
@@ -41,14 +43,22 @@ const Index = () => {
             onValueChange={setSelectedTab}
             className="mb-8"
           >
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2">
-              <TabsTrigger value="remove-bg" className="flex items-center gap-2">
+            <TabsList className="grid w-full max-w-xl mx-auto grid-cols-4">
+              <TabsTrigger value="remove-bg" className="flex items-center gap-2 text-xs md:text-sm">
                 <Brush size={16} />
-                <span>Remove Background</span>
+                <span>Background</span>
               </TabsTrigger>
-              <TabsTrigger value="filters" className="flex items-center gap-2">
+              <TabsTrigger value="filters" className="flex items-center gap-2 text-xs md:text-sm">
                 <Filter size={16} />
-                <span>Image Filters</span>
+                <span>Filters</span>
+              </TabsTrigger>
+              <TabsTrigger value="crop" className="flex items-center gap-2 text-xs md:text-sm">
+                <CropIcon size={16} />
+                <span>Crop</span>
+              </TabsTrigger>
+              <TabsTrigger value="noise" className="flex items-center gap-2 text-xs md:text-sm">
+                <Sparkles size={16} />
+                <span>Noise</span>
               </TabsTrigger>
             </TabsList>
             
@@ -90,6 +100,32 @@ const Index = () => {
                 <ImageFilters originalImageUrl={uploadedImageUrl} />
               </div>
             </TabsContent>
+            
+            <TabsContent value="crop" className="mt-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="flex items-center justify-center border rounded-lg overflow-hidden bg-[#f1f1f1] bg-grid-pattern">
+                  <img 
+                    src={uploadedImageUrl} 
+                    alt="Original" 
+                    className="max-w-full h-auto"
+                  />
+                </div>
+                <ImageCropper originalImageUrl={uploadedImageUrl} />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="noise" className="mt-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="flex items-center justify-center border rounded-lg overflow-hidden bg-[#f1f1f1] bg-grid-pattern">
+                  <img 
+                    src={uploadedImageUrl} 
+                    alt="Original" 
+                    className="max-w-full h-auto"
+                  />
+                </div>
+                <NoiseRemoval originalImageUrl={uploadedImageUrl} />
+              </div>
+            </TabsContent>
           </Tabs>
         ) : (
           <FileUpload onFileUploaded={handleFileUploaded} />
@@ -100,9 +136,11 @@ const Index = () => {
             <h3 className="text-sm font-medium mb-2">How to use:</h3>
             <ol className="text-xs text-muted-foreground text-left list-decimal pl-4 space-y-1">
               <li>Upload an image using the upload area</li>
-              <li>Choose between "Remove Background" or "Image Filters"</li>
+              <li>Choose between "Remove Background", "Image Filters", "Crop", or "Noise Removal"</li>
               <li>For background removal: Use the brush tool to mark areas you want to make transparent</li>
               <li>For image filters: Apply and adjust various filters to enhance your image</li>
+              <li>For cropping: Adjust the crop box and aspect ratio to frame your image</li>
+              <li>For noise removal: Adjust the strength slider and apply noise reduction</li>
               <li>Download your processed image</li>
             </ol>
           </div>
