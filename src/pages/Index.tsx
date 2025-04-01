@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Brush } from "lucide-react";
+import { Brush, Filter } from "lucide-react";
 import FileUpload from "@/components/FileUpload";
 import Canvas from "@/components/Canvas";
 import ResultPreview from "@/components/ResultPreview";
@@ -28,8 +28,8 @@ const Index = () => {
           </div>
           <h1 className="text-3xl font-bold mb-2">Background Banisher</h1>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Upload an image and use the brush tool to mark areas you want to remove.
-            Our tool will process your image and remove the background.
+            Upload an image, use the brush tool to mark areas you want to remove,
+            and apply filters to customize your result.
           </p>
         </header>
 
@@ -51,21 +51,10 @@ const Index = () => {
               <div className="border rounded-lg h-full flex items-center justify-center p-8">
                 <div className="text-center">
                   <div className="mx-auto w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-3">
-                    <svg 
-                      width="24" 
-                      height="24" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round"
+                    <Filter 
+                      size={24}
                       className="text-muted-foreground"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" y1="16" x2="12" y2="12" />
-                      <line x1="12" y1="8" x2="12.01" y2="8" />
-                    </svg>
+                    />
                   </div>
                   <h3 className="text-lg font-medium mb-2">No result yet</h3>
                   <p className="text-muted-foreground text-sm">
@@ -86,6 +75,7 @@ const Index = () => {
               <li>Upload an image using the upload area</li>
               <li>Use the brush tool to mark areas you want to make transparent</li>
               <li>Click the "Remove Background" button to process the image</li>
+              <li>Apply filters to customize your result</li>
               <li>Download your processed image</li>
             </ol>
           </div>
